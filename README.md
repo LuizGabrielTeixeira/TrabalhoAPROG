@@ -1,6 +1,5 @@
-# TrabalhoAPROG
-Trabalhindo em dupla
+## TrabalhoAPROG
 
-pronto gayzao, adiantei aqui e ai tu clona e poderemos trabajar cada um de su casa, yo de porto e tu de nazare
+### gabriel : a) c) e) g) i)
 
-lido e recebido, da nazare
+### bernardo : b) d) f) h) j)
