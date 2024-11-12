@@ -8,6 +8,6 @@
 #### Bernardo Carvalho Correia (1241456)
 
 ## Divisão de tarefas:
-#### 1230350 -> a);c);e);g);i)
-#### 1241456 -> b):d);f);h);j)
+#### gabriel -> a);c);e);g);i)
+#### bernardo -> b):d);f);h);j)
 
