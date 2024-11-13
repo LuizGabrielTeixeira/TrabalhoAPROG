@@ -8,6 +8,15 @@
 #### Bernardo Carvalho Correia (1241456)
 
 ## Divisão de tarefas:
-#### gabriel -> a);c);e);g);i)
-#### bernardo -> b):d);f);h);j)
+#### gabriel : a);c);e);g);i)
+#### bernardo : b):d);f);h);j)
 
+
+### Nome das variáveis e siglas:
+| variáveis | siglas | tipo |
+|-----------|--------|------|
+|           |        |      |
+|           |        |      |
+|           |        |      |
+|           |        |      |
+|           |        |      |
