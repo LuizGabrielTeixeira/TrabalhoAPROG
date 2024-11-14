@@ -15,6 +15,11 @@ public class DB_1230350_1241456 {
         int[][] voltDeiMatrix;
         voltDeiMatrix = new int[quantityOfVehicles][quantityOfDays+1];
 
+        for (int i = 0; i < voltDeiMatrix.length; i++) {
+            for (int j = 1; j < voltDeiMatrix[i].length; j++) {
+                voltDeiMatrix[i][j] = scanner.nextInt();
+            }
+        }
 
         for (int i = 0; i < quantityOfDays; i++) {
             if (i == 0) {
