@@ -7,6 +7,14 @@ public class DB_1230350_1241456 {
 
     //a)
     public static void planningMatrix() {
+        Scanner scanner = new Scanner(System.in);
+
+        int quantityOfVehicles = scanner.nextInt();
+        int quantityOfDays = scanner.nextInt();
+
+        int[][] voltDeiMatrix;
+        voltDeiMatrix = new int[quantityOfVehicles][quantityOfDays+1];
+
 
         for (int i = 0; i < quantityOfDays; i++) {
             if (i == 0) {
