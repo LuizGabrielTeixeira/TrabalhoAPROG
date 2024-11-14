@@ -28,7 +28,7 @@ public class DB_1230350_1241456 {
     }
 
     //method that prints the matrix
-    public static void printMatrix(int[][] matrix) {
+    public static void printMatrix(int[][] matrix, int format) {
         int quantityOfDays = matrix[0].length - 1;
 
         for (int i = 0; i < quantityOfDays; i++) {
@@ -45,7 +45,20 @@ public class DB_1230350_1241456 {
                 if (j == 0) {
                     System.out.printf("V%-3d:", matrix[i][j]);
                 } else {
-                    System.out.printf("%8.1f ", (double) matrix[i][j]);
+                    switch (format) {
+                        case 1:
+                            //only print the intenger number
+                            System.out.printf("%8d ", matrix[i][j]);
+                            break;
+                        case 2:
+                            // print the percentage with one decimal
+                            System.out.printf("%7.1f%% ", (double) matrix[i][j]);
+                            break;
+                        case 3:
+                            // print the average with one decimal
+                            System.out.printf("%8.1f ", (double) matrix[i][j]);
+                            break;
+                    }
                 }
             }
             System.out.println();
@@ -55,9 +68,10 @@ public class DB_1230350_1241456 {
 
     //method that prints the matrix showing kilometers format
     public static void planningMatrix(int[][] voltDeiMatrix) {
+        int format = 1;
         System.out.print("a) planeamento (km/dia/veículo)\n");
 
-        printMatrix(voltDeiMatrix);
+        printMatrix(voltDeiMatrix, format);
     }
 
     //method that calculates the total distance traveled by each vehicle in the period
@@ -84,6 +98,7 @@ public class DB_1230350_1241456 {
 
     //method that calculates the number of recharges needed for each vehicle in a day
     public static void batteryRecharge(int[][] voltDeiMatrix) {
+        int format = 1;
         System.out.println("c) recargas das baterias");
 
         int[][] batteryRechargeMatrix = new int[voltDeiMatrix.length][voltDeiMatrix[0].length];
@@ -108,7 +123,7 @@ public class DB_1230350_1241456 {
             }
         }
 
-        printMatrix(batteryRechargeMatrix);
+        printMatrix(batteryRechargeMatrix, format);
     }
 
 
