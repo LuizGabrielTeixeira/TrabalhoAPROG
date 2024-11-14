@@ -9,6 +9,7 @@ public class DB_1230350_1241456 {
     public static void planningMatrix() {
         Scanner scanner = new Scanner(System.in);
 
+        String texto = scanner.nextLine();
         int quantityOfVehicles = scanner.nextInt();
         int quantityOfDays = scanner.nextInt();
 
@@ -21,16 +22,14 @@ public class DB_1230350_1241456 {
             }
         }
 
-
         for (int i = 0; i < quantityOfDays; i++) {
             if (i == 0) {
-                System.out.print("a) planeamento (km/dia/veículo)\ndia :");
+                System.out.print("a) planeamento (km/dia/veículo)\ndia : ");
             }
-            System.out.printf("%9d", i);
+            System.out.printf("%8d ", i);
         }
 
         System.out.print("\n----|--------|--------|--------|--------|--------|--------|\n");
-
 
         for (int i = 0; i < voltDeiMatrix.length; i++) {
             voltDeiMatrix[i][0] = (i);
