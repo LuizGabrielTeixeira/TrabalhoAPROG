@@ -30,13 +30,21 @@ public static void planningMatrix (){
         }
         System.out.println();
     }
-
-    System.out.println(voltDeiMatrix);
 }
 
 //b)
-public static void totalTraveledDistance (){
+public static void totalTraveledDistance (int numberOfRows, int[][]voltDeiMatrix){
 
+        int totalDistance = 0;
+        int[][] totalDistanceArray = new int[numberOfRows][2];
+
+    for (int rowNumber = 1; rowNumber < voltDeiMatrix.length; rowNumber++) {
+        for (int columnNumber = 1; columnNumber < voltDeiMatrix[numberOfRows].length; columnNumber++) {
+            totalDistance += voltDeiMatrix[rowNumber][columnNumber];
+        }
+
+        totalDistanceArray[rowNumber - 1][2] = totalDistance;
+    }
 }
 //c)
 public static void c (){}
