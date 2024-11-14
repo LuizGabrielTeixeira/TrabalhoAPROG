@@ -4,19 +4,10 @@
 #### 🚙 Sistema de gestão de carros elétricos 🚙
 
 ## Responsáveis:
-#### Luís Gabriel Teixeira Sargaço (1230350) 
+#### Luiz Gabriel de Souza Sargaço Teixeira (1230350) 
 #### Bernardo Carvalho Correia (1241456)
 
 ## Divisão de tarefas:
-#### gabriel : a);c);e);g);i)
-#### bernardo : b):d);f);h);j)
+#### gabriel : itens: A,C,E,G e I
+#### bernardo : itens: B,D,F,H e J
 
-
-### Nome das variáveis e siglas:
-| variáveis | siglas | tipo |
-|-----------|--------|------|
-|           |        |      |
-|           |        |      |
-|           |        |      |
-|           |        |      |
-|           |        |      |
