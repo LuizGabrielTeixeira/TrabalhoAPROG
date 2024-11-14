@@ -2,10 +2,11 @@ import java.util.Scanner;
 
 public class DB_1230350_1241456 {
     public static void main(String[] args) {
-        int[][] volDeiMatrix = matrixBuilder();
+        int[][] volDeiMatrix = matrixBuilder(); // creates the matrix
 
-        planningMatrix(volDeiMatrix);
-        totalTraveledDistance(volDeiMatrix);
+        planningMatrix(volDeiMatrix); // a)
+        totalTraveledDistance(volDeiMatrix); // b)
+        batteryRecharge(volDeiMatrix); // c)
     }
 
     //method that returns the matrix
@@ -26,27 +27,25 @@ public class DB_1230350_1241456 {
         return voltDeiMatrix;
     }
 
-    //a)
-    public static void planningMatrix(int[][] voltDeiMatrix) {
-
-        int quantityOfDays = voltDeiMatrix[0].length - 1;
+    //method that prints the matrix
+    public static void printMatrix(int[][] matrix) {
+        int quantityOfDays = matrix[0].length - 1;
 
         for (int i = 0; i < quantityOfDays; i++) {
             if (i == 0) {
-                System.out.print("a) planeamento (km/dia/veículo)\ndia : ");
+                System.out.print("dia : ");
             }
             System.out.printf("%8d ", i);
         }
-
         System.out.print("\n----|--------|--------|--------|--------|--------|--------|\n");
 
-        for (int i = 0; i < voltDeiMatrix.length; i++) {
-            voltDeiMatrix[i][0] = (i);
-            for (int j = 0; j < voltDeiMatrix[i].length; j++) {
+        for (int i = 0; i < matrix.length; i++) {
+            matrix[i][0] = (i);
+            for (int j = 0; j < matrix[i].length; j++) {
                 if (j == 0) {
-                    System.out.printf("V%-3d:", voltDeiMatrix[i][j]);
+                    System.out.printf("V%-3d:", matrix[i][j]);
                 } else {
-                    System.out.printf("%8d ", voltDeiMatrix[i][j]);
+                    System.out.printf("%8.1f ", (double) matrix[i][j]);
                 }
             }
             System.out.println();
@@ -54,7 +53,14 @@ public class DB_1230350_1241456 {
 
     }
 
-    //b)
+    //method that prints the matrix showing kilometers format
+    public static void planningMatrix(int[][] voltDeiMatrix) {
+        System.out.print("a) planeamento (km/dia/veículo)\n");
+
+        printMatrix(voltDeiMatrix);
+    }
+
+    //method that calculates the total distance traveled by each vehicle in the period
     public static void totalTraveledDistance(int[][] voltDeiMatrix) {
 
         int totalDistance = 0;
@@ -76,8 +82,33 @@ public class DB_1230350_1241456 {
         }
     }
 
-    //c)
-    public static void c() {
+    //method that calculates the number of recharges needed for each vehicle in a day
+    public static void batteryRecharge(int[][] voltDeiMatrix) {
+        System.out.println("c) recargas das baterias");
+
+        int[][] batteryRechargeMatrix = new int[voltDeiMatrix.length][voltDeiMatrix[0].length];
+        int rechargeCounter;
+        final int fullBattery = 100;
+        int batteryInicialCharge;
+
+        for (int i = 0; i < voltDeiMatrix.length; i++) {
+            batteryInicialCharge = fullBattery;
+            for (int j = 1; j < voltDeiMatrix[i].length; j++) {
+                rechargeCounter = 0;
+
+                while (voltDeiMatrix[i][j] >= batteryInicialCharge) {
+                    voltDeiMatrix[i][j] -= batteryInicialCharge;
+                    rechargeCounter++;
+                    batteryInicialCharge = fullBattery;
+                }
+
+                batteryInicialCharge -= voltDeiMatrix[i][j];
+
+                batteryRechargeMatrix[i][j] = rechargeCounter;
+            }
+        }
+
+        printMatrix(batteryRechargeMatrix);
     }
 
 
