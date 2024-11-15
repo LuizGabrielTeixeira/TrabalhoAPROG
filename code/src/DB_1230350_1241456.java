@@ -1,6 +1,12 @@
 import java.util.Scanner;
 
 public class DB_1230350_1241456 {
+    static Scanner scanner = new Scanner(System.in);//global for future reasons (for reading a file, for example)
+
+    //constants
+    static final int FULL_BATTERY = 100;
+
+    //main method
     public static void main(String[] args) {
         double[][] voltDeiMatrix = matrixBuilder(); // creates the matrix
 
@@ -13,7 +19,6 @@ public class DB_1230350_1241456 {
 
     //method that returns the matrix
     public static double[][] matrixBuilder() {
-        Scanner scanner = new Scanner(System.in);
 
         String text = scanner.nextLine();
         double quantityOfVehicles = scanner.nextDouble();
@@ -70,6 +75,11 @@ public class DB_1230350_1241456 {
                             // print the average with one decimal
                             System.out.printf("%8.1f %s", matrix[i][j], sufix);
                             break;
+                        case 4:
+                            // print for ex g)
+                            System.out.printf("<%d> dias consecutivos, veículos : [V%d]", (int) matrix[0][0], (int) matrix[0][1], sufix);
+                            break;
+
                     }
                 }
             }
@@ -123,18 +133,17 @@ public class DB_1230350_1241456 {
 
         double[][] batteryRechargeMatrix = new double[voltDeiMatrix.length][voltDeiMatrix[0].length];
         int rechargeCounter;
-        final int fullBattery = 100;
         int batteryInicialCharge;
 
         for (int i = 0; i < voltDeiMatrixCopy.length; i++) {
-            batteryInicialCharge = fullBattery;
+            batteryInicialCharge = FULL_BATTERY;
             for (int j = 1; j < voltDeiMatrixCopy[i].length; j++) {
                 rechargeCounter = 0;
 
                 while (voltDeiMatrixCopy[i][j] >= batteryInicialCharge) {
                     voltDeiMatrixCopy[i][j] -= batteryInicialCharge;
                     rechargeCounter++;
-                    batteryInicialCharge = fullBattery;
+                    batteryInicialCharge = FULL_BATTERY;
                 }
 
                 batteryInicialCharge -= (int) voltDeiMatrixCopy[i][j];
