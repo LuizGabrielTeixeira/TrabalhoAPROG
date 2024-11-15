@@ -48,7 +48,10 @@ public class DB_1230350_1241456 {
         for (int i = 0; i < matrix.length; i++) {
             matrix[i][0] = (i);
             for (int j = 0; j < matrix[i].length; j++) {
-                if (j == 0) {
+                if (j == 0 && format == 3) {
+                    String text = "km";
+                    System.out.printf("%-3s:", text);
+                } else if (j==0) {
                     System.out.printf("V%-3d:", matrix[i][j]);
                 } else {
                     switch (format) {
