@@ -28,47 +28,43 @@ public class DB_1230350_1241456 {
     }
 
     //method that prints the matrix
-    public static void printMatrix(int[][] matrix, int format) {
+    public static void printMatrix(int[][] matrix, int format, boolean barOnTop, boolean dayMessage, String sufix) {
         int quantityOfDays = matrix[0].length - 1;
 
-        for (int i = 0; i < quantityOfDays; i++) {
-            if (i == 0) {
-                System.out.print("dia : ");
+        if (dayMessage) {
+            for (int i = 0; i < quantityOfDays; i++) {
+                if (i == 0) {
+                    System.out.print("dia : ");
+                }
+                System.out.printf("%8d ", i);
             }
-            System.out.printf("%8d ", i);
+
         }
-        System.out.print("\n----|--------|--------|--------|--------|--------|--------|\n");
+
+        if (barOnTop) {
+            System.out.print("\n----|--------|--------|--------|--------|--------|--------|\n");
+        }
 
         for (int i = 0; i < matrix.length; i++) {
             matrix[i][0] = (i);
             for (int j = 0; j < matrix[i].length; j++) {
-                switch (format) {
-                    case 1:
-                        //only print the intenger number
-                        if (j == 0) {
-                            System.out.printf("V%-3d:", matrix[i][j]);
-                        } else {
-                            System.out.printf("%8d ", matrix[i][j]);
-                        }
-                        break;
-                    case 2:
-                        // print the percentage with one decimal
-                        if (j == 0) {
-                            System.out.printf("V%-3d:", matrix[i][j]);
-                        } else {
-                            System.out.printf("%7.1f%% ", (double) matrix[i][j]);
-                        }
-                        break;
-                    case 3:
-                        // print the average with one decimal
-                        if (j == 0) {
-                            String text = "km";
-                            System.out.printf("%-3s  ", text);
-                        } else {
-                            System.out.printf("%8.1f ", (double) matrix[i][j]);
-                        }
-                        break;
-
+                if (j == 0) {
+                    System.out.printf("V%-3d:", matrix[i][j]);
+                } else {
+                    switch (format) {
+                        case 1:
+                            //only print the intenger number
+                            System.out.printf("%8d %s", matrix[i][j], sufix);
+                            break;
+                        case 2:
+                            // print the percentage with one decimal
+                            System.out.printf("%7.1f%% %s", (double) matrix[i][j], sufix);
+                            break;
+                        case 3:
+                            // print the average with one decimal
+                            System.out.printf("%8.1f %s", (double) matrix[i][j], sufix);
+                            break;
+                    }
                 }
             }
             System.out.println();
@@ -79,37 +75,37 @@ public class DB_1230350_1241456 {
     //method that prints the matrix showing kilometers format
     public static void planningMatrix(int[][] voltDeiMatrix) {
         int format = 1;
-        System.out.print("a) planeamento (km/dia/veículo)\n");
+        System.out.print("\na) planeamento (km/dia/veículo)\n");
 
-        printMatrix(voltDeiMatrix, format);
+        printMatrix(voltDeiMatrix, format, true, true, "");
     }
 
-    //method that calculates the total distance traveled by each vehicle in the period
+    //b)
     public static void totalTraveledDistance(int[][] voltDeiMatrix) {
 
         int totalDistance = 0;
         int numberOfRows = voltDeiMatrix.length;
         int[][] totalDistanceArray = new int[numberOfRows][2];
 
-        for (int rowNumber = 1; rowNumber < voltDeiMatrix.length; rowNumber++) {
+        System.out.println("\nb) total de km a percorrer");
+
+        for (int rowNumber = 0; rowNumber < numberOfRows; rowNumber++) {
             for (int columnNumber = 1; columnNumber < voltDeiMatrix[rowNumber].length; columnNumber++) {
                 totalDistance += voltDeiMatrix[rowNumber][columnNumber];
             }
 
-            totalDistanceArray[rowNumber - 1][1] = totalDistance;
+            totalDistanceArray[rowNumber][1] = totalDistance;
+
+            totalDistance = 0;
         }
 
-        for (int i = 0; i < totalDistanceArray.length; i++) {
-            for (int j = 0; j < totalDistanceArray[i].length; j++) {
-                System.out.println(totalDistanceArray[i][j]);
-            }
-        }
+        printMatrix(totalDistanceArray, 1, false, false, "km");
     }
 
-    //method that calculates the number of recharges needed for each vehicle in a day
+    //c)
     public static void batteryRecharge(int[][] voltDeiMatrix) {
         int format = 1;
-        System.out.println("c) recargas das baterias");
+        System.out.println("\nc) recargas das baterias");
 
         int[][] batteryRechargeMatrix = new int[voltDeiMatrix.length][voltDeiMatrix[0].length];
         int rechargeCounter;
@@ -132,8 +128,7 @@ public class DB_1230350_1241456 {
                 batteryRechargeMatrix[i][j] = rechargeCounter;
             }
         }
-
-        printMatrix(batteryRechargeMatrix, format);
+        printMatrix(batteryRechargeMatrix, format, true, true, "");
     }
 
 
