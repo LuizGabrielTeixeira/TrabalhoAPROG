@@ -22,7 +22,7 @@ public class DB_1230350_1241456 {
         averageDayCarsKm(voltDeiMatrix); // e)
     }
 
-  
+
     //------------ EXERCISES  ------------
     //------ EXERCISE A ------
     public static void planningMatrix(double[][] voltDeiMatrix) {
@@ -176,7 +176,7 @@ public class DB_1230350_1241456 {
     // ------ AUXILIARY METHODS ------
 
     //------ AUX -> METHOD TO BUILD A MATRIX ------
-    public static double[][] matrixBuilder() {
+    public static double[][] matrixBuilder(Scanner scanner) {
 
         String text = scanner.nextLine();
         double quantityOfVehicles = scanner.nextDouble();
