@@ -10,7 +10,7 @@ public class DB_1230350_1241456 {
 
     // ------ MAIN ------
     public static void main(String[] args) throws FileNotFoundException {
-        File file = new File("input.txt");
+        File file = new File("TrabalhoAPROG/input.txt");
         Scanner scanner = new Scanner(file);
 
         double[][] voltDeiMatrix = matrixBuilder(scanner); // creates the matrix
@@ -18,8 +18,9 @@ public class DB_1230350_1241456 {
         planningMatrix(voltDeiMatrix); // a)
         totalTraveledDistance(voltDeiMatrix); // b)
         batteryRecharge(voltDeiMatrix); // c)
-        dailyCharge(voltDeiMatrix); //d
-        averageDayCarsKm(voltDeiMatrix); // e)
+        dailyCharge(voltDeiMatrix); //d)
+        averageDayCarsKm(voltDeiMatrix, true); // e)
+        vehiclesWithAnHigherAverage(voltDeiMatrix); // f)
     }
 
 
@@ -103,7 +104,7 @@ public class DB_1230350_1241456 {
         for (int rows = 0; rows < voltDeiMatrix.length; rows++) {
             remainderBattery = 0;
             for (int columns = 1; columns < voltDeiMatrix[0].length; columns++) {
-                
+
 
                 partialBattery = (remainderBattery - (voltDeiMatrix[rows][columns]));
 
@@ -126,9 +127,10 @@ public class DB_1230350_1241456 {
 
 
     //------ EXERCISE E ------
-    public static void averageDayCarsKm(double[][] voltDeiMatrix) {
+    public static double[][] averageDayCarsKm(double[][] voltDeiMatrix, boolean needToPrint) {
         final int FORMAT = 3;
-        System.out.println("\ne) média de km diários da frota");
+        if (needToPrint)
+            System.out.println("\ne) média de km diários da frota");
 
         double[][] averageKmMatrix = new double[1][voltDeiMatrix[0].length];
         double sumKilometers;
@@ -144,14 +146,42 @@ public class DB_1230350_1241456 {
             averageKmMatrix[0][i] = average;
         }
 
-        printMatrix(averageKmMatrix, FORMAT, true, true, "");
+        if (needToPrint) {
+            printMatrix(averageKmMatrix, FORMAT, true, true, "");
+        }
+
+        return averageKmMatrix;
     }
 
+    //------ EXERCISE F ------
+    public static void vehiclesWithAnHigherAverage(double[][] voltDeiMatrix) {
 
-    //f)
-    public static void f() {
+        System.out.println();
+        System.out.print("f) deslocações sempre acima da média diária");
+
+        double[][] averageDayCarsKmArray = averageDayCarsKm(voltDeiMatrix, false);
+        int[] carsOverAverageArray = new int[voltDeiMatrix.length];
+        int howManyVehicles = 0;
+        int counter;
+
+        for (int rows = 0; rows < voltDeiMatrix.length; rows++) {
+            counter = 0;
+            for (int column = 0; column < voltDeiMatrix[0].length; column++) {
+                if (voltDeiMatrix[rows][column] == averageDayCarsKmArray[0][column]) {
+                    counter++;
+                }
+            }
+            if (counter == averageDayCarsKmArray.length) {
+                howManyVehicles += 1;
+                carsOverAverageArray[rows] = (int) voltDeiMatrix[rows][0];
+            }
+        }
+
+        System.out.printf("\n<%d> veículos : ", howManyVehicles);
+        for (int iteratorToPrint = 0; iteratorToPrint < howManyVehicles; iteratorToPrint++) {
+            System.out.printf("[V%d]", carsOverAverageArray[iteratorToPrint]);
+        }
     }
-
 
     //g)
     public static void g() {
