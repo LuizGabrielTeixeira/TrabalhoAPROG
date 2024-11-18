@@ -1,14 +1,18 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class DB_1230350_1241456 {
-    static Scanner scanner = new Scanner(System.in);//global for future reasons (for reading a file, for example)
 
     //constants
     static final int FULL_BATTERY = 100;
 
     //main method
-    public static void main(String[] args) {
-        double[][] voltDeiMatrix = matrixBuilder(); // creates the matrix
+    public static void main(String[] args) throws FileNotFoundException {
+        File file = new File("input.txt");
+        Scanner scanner = new Scanner(file);
+
+        double[][] voltDeiMatrix = matrixBuilder(scanner); // creates the matrix
 
         planningMatrix(voltDeiMatrix); // a)
         totalTraveledDistance(voltDeiMatrix); // b)
@@ -18,7 +22,7 @@ public class DB_1230350_1241456 {
 
 
     //method that returns the matrix
-    public static double[][] matrixBuilder() {
+    public static double[][] matrixBuilder(Scanner scanner) {
 
         String text = scanner.nextLine();
         double quantityOfVehicles = scanner.nextDouble();
