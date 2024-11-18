@@ -77,7 +77,7 @@ public class DB_1230350_1241456 {
                             break;
                         case 4:
                             // print for ex g)
-                            System.out.printf("<%d> dias consecutivos, veículos : [V%d]", (int) matrix[0][0], (int) matrix[0][1], sufix);
+                            System.out.printf("<%d> dias consecutivos, veículos : [V%d]", (int) matrix[0][0], (int) matrix[0][1]);
                             break;
 
                     }
