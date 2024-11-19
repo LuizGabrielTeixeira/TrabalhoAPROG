@@ -10,16 +10,19 @@ public class DB_1230350_1241456 {
 
     // ------ MAIN ------
     public static void main(String[] args) throws FileNotFoundException {
-        File file = new File("input.txt");
+        File file = new File("TrabalhoAPROG/input.txt");
         Scanner scanner = new Scanner(file);
 
         double[][] voltDeiMatrix = matrixBuilder(scanner); // creates the matrix
 
         planningMatrix(voltDeiMatrix); // a)
         totalTraveledDistance(voltDeiMatrix); // b)
-        batteryRecharge(voltDeiMatrix); // c)
-        dailyCharge(voltDeiMatrix); //d
-        averageDayCarsKm(voltDeiMatrix); // e)
+        batteryRecharge(voltDeiMatrix, true); // c)
+        dailyCharge(voltDeiMatrix); //d)
+        averageDayCarsKm(voltDeiMatrix, true); // e)
+        vehiclesWithAnHigherAverage(voltDeiMatrix); // f)
+        //g
+        latestDayWithMoreCharges(voltDeiMatrix); //h
     }
 
 
@@ -55,9 +58,10 @@ public class DB_1230350_1241456 {
     }
 
     //------ EXERCISE C ------
-    public static void batteryRecharge(double[][] voltDeiMatrix) {
+    public static double[][] batteryRecharge(double[][] voltDeiMatrix, boolean needToPrint) {
         int format = 1;
-        System.out.println("\nc) recargas das baterias");
+        if (needToPrint)
+            System.out.println("\nc) recargas das baterias");
 
         //copy the matrix to not change the original
         double[][] voltDeiMatrixCopy = new double[voltDeiMatrix.length][voltDeiMatrix[0].length];
@@ -87,7 +91,10 @@ public class DB_1230350_1241456 {
                 batteryRechargeMatrix[i][j] = rechargeCounter;
             }
         }
-        printMatrix(batteryRechargeMatrix, format, true, true, "");
+        if (needToPrint)
+            printMatrix(batteryRechargeMatrix, format, true, true, "");
+
+        return batteryRechargeMatrix;
     }
 
 
@@ -103,7 +110,7 @@ public class DB_1230350_1241456 {
         for (int rows = 0; rows < voltDeiMatrix.length; rows++) {
             remainderBattery = 0;
             for (int columns = 1; columns < voltDeiMatrix[0].length; columns++) {
-                
+
 
                 partialBattery = (remainderBattery - (voltDeiMatrix[rows][columns]));
 
@@ -126,9 +133,10 @@ public class DB_1230350_1241456 {
 
 
     //------ EXERCISE E ------
-    public static void averageDayCarsKm(double[][] voltDeiMatrix) {
+    public static double[][] averageDayCarsKm(double[][] voltDeiMatrix, boolean needToPrint) {
         final int FORMAT = 3;
-        System.out.println("\ne) média de km diários da frota");
+        if (needToPrint)
+            System.out.println("\ne) média de km diários da frota");
 
         double[][] averageKmMatrix = new double[1][voltDeiMatrix[0].length];
         double sumKilometers;
@@ -144,22 +152,80 @@ public class DB_1230350_1241456 {
             averageKmMatrix[0][i] = average;
         }
 
-        printMatrix(averageKmMatrix, FORMAT, true, true, "");
+        if (needToPrint) {
+            printMatrix(averageKmMatrix, FORMAT, true, true, "");
+        }
+
+        return averageKmMatrix;
     }
 
+    //------ EXERCISE F ------
+    public static void vehiclesWithAnHigherAverage(double[][] voltDeiMatrix) {
 
-    //f)
-    public static void f() {
+        System.out.println();
+        System.out.print("f) deslocações sempre acima da média diária");
+
+        double[][] averageDayCarsKmArray = averageDayCarsKm(voltDeiMatrix, false);
+        int[] carsOverAverageArray = new int[voltDeiMatrix.length];
+        int howManyVehicles = 0;
+        int counter;
+
+        for (int rows = 0; rows < voltDeiMatrix.length; rows++) {
+            counter = 0;
+            for (int column = 0; column < voltDeiMatrix[0].length; column++) {
+                if (voltDeiMatrix[rows][column] == averageDayCarsKmArray[0][column]) {
+                    counter++;
+                }
+            }
+            if (counter == averageDayCarsKmArray.length) {
+                howManyVehicles += 1;
+                carsOverAverageArray[rows] = (int) voltDeiMatrix[rows][0];
+            }
+        }
+
+        System.out.printf("\n<%d> veículos : ", howManyVehicles);
+        for (int iteratorToPrint = 0; iteratorToPrint < howManyVehicles; iteratorToPrint++) {
+            System.out.printf("[V%d]", carsOverAverageArray[iteratorToPrint]);
+        }
     }
-
 
     //g)
     public static void g() {
     }
 
 
-    //h)
-    public static void h() {
+    //------ EXERCISE H ------
+    public static void latestDayWithMoreCharges(double[][] voltDeiMatrix) {
+        double[][] batteryRechargeArray = batteryRecharge(voltDeiMatrix, false);
+        int numberOfCharges = 0;
+        int numberOfMaxCharges = Integer.MAX_VALUE;
+        int greaterColumn = 0;
+
+        final int ERRORMARGIN = 1; //Might be deleted. However, used because our first column only contains the index used to count the cars.
+
+
+        for (int columns = 1; columns < batteryRechargeArray[0].length; columns++) {
+            numberOfCharges = 0;
+            for (int rows = 0; rows < batteryRechargeArray.length; rows++) {
+
+                if (batteryRechargeArray[rows][columns] > 0) {
+                    numberOfCharges++;
+                }
+            }
+            if (numberOfMaxCharges > numberOfCharges) {
+                numberOfMaxCharges = numberOfCharges;
+                greaterColumn = columns + ERRORMARGIN;
+            }
+        }
+
+        if (numberOfCharges == 0) {
+            greaterColumn = -1;
+        }
+
+        System.out.println();
+        System.out.println();
+        System.out.printf("h) dia mais tardio em que todos os veículos necessitam de recarregar <%d>", greaterColumn);
+
     }
 
 
@@ -194,7 +260,8 @@ public class DB_1230350_1241456 {
     }
 
     //------ AUX -> METHOD THAT PRINTS ANY MATRIX ------
-    public static void printMatrix(double[][] matrix, int format, boolean barOnTop, boolean dayMessage, String sufix) {
+    public static void printMatrix(double[][] matrix, int format, boolean barOnTop, boolean dayMessage, String
+            sufix) {
         int quantityOfDays = matrix[0].length - 1;
 
         if (dayMessage) {
@@ -208,7 +275,12 @@ public class DB_1230350_1241456 {
         }
 
         if (barOnTop) {
-            System.out.print("\n----|--------|--------|--------|--------|--------|--------|\n");
+            System.out.print("\n----|");
+            while (quantityOfDays > 0) {
+                System.out.print("--------|");
+                quantityOfDays--;
+            }
+            System.out.println();
         }
 
         for (int i = 0; i < matrix.length; i++) {
