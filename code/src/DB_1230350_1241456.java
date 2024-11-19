@@ -6,6 +6,7 @@ public class DB_1230350_1241456 {
 
     // ------ CONSTANTS ------
     static final int FULL_BATTERY = 100;
+    private static final double COST_PER_RECHARGE = 5.5;
 
 
     // ------ MAIN ------
@@ -17,10 +18,11 @@ public class DB_1230350_1241456 {
 
         planningMatrix(voltDeiMatrix); // a)
         totalTraveledDistance(voltDeiMatrix); // b)
-        double[][] batteryRechargeMatrix = batteryRecharge(voltDeiMatrix); // print exercise c) and return matrix for exercise g)
+        double[][] batteryRechargeMatrix = batteryRecharge(voltDeiMatrix); // print exercise c) and return matrix
         dailyCharge(voltDeiMatrix); //d
         averageDayCarsKm(voltDeiMatrix); // e)
         vehiclesConsecutiveRecharges(batteryRechargeMatrix); // g)
+        rechargesCost(batteryRechargeMatrix); // i)
 
     }
 
@@ -28,8 +30,8 @@ public class DB_1230350_1241456 {
     //------------ EXERCISES  ------------
     //------ EXERCISE A ------
     public static void planningMatrix(double[][] voltDeiMatrix) {
-        int format = 1;
-        System.out.print("\na) planeamento (km/dia/veículo)\n");
+        final int format = 1;
+        System.out.println("a) planeamento (km/dia/veículo)");
 
         printMatrix(voltDeiMatrix, format, true, true, "");
     }
@@ -58,20 +60,20 @@ public class DB_1230350_1241456 {
 
     //------ EXERCISE C ------
     public static double[][] batteryRecharge(double[][] voltDeiMatrix) {
-        int format = 1;
+        final int format = 1;
         System.out.println("\nc) recargas das baterias");
 
+        int rechargeCounter;
+        int batteryInicialCharge;
+        double[][] batteryRechargeMatrix = new double[voltDeiMatrix.length][voltDeiMatrix[0].length];
         //copy the matrix to not change the original
         double[][] voltDeiMatrixCopy = new double[voltDeiMatrix.length][voltDeiMatrix[0].length];
+
         for (int i = 0; i < voltDeiMatrixCopy.length; i++) {
             for (int j = 0; j < voltDeiMatrixCopy[i].length; j++) {
                 voltDeiMatrixCopy[i][j] = voltDeiMatrix[i][j];
             }
         }
-
-        double[][] batteryRechargeMatrix = new double[voltDeiMatrix.length][voltDeiMatrix[0].length];
-        int rechargeCounter;
-        int batteryInicialCharge;
 
         for (int i = 0; i < voltDeiMatrixCopy.length; i++) {
             batteryInicialCharge = FULL_BATTERY;
@@ -85,12 +87,11 @@ public class DB_1230350_1241456 {
                 }
 
                 batteryInicialCharge -= (int) voltDeiMatrixCopy[i][j];
-
                 batteryRechargeMatrix[i][j] = rechargeCounter;
             }
         }
-        printMatrix(batteryRechargeMatrix, format, true, true, "");
 
+        printMatrix(batteryRechargeMatrix, format, true, true, "");
         return batteryRechargeMatrix;
     }
 
@@ -158,21 +159,19 @@ public class DB_1230350_1241456 {
 
 
     //------ EXERCISE G ------
-    public static void vehiclesConsecutiveRecharges (double[][] batteryRechargeMatrix) {
-        int format = 4;
+    public static void vehiclesConsecutiveRecharges(double[][] batteryRechargeMatrix) {
         System.out.println("\ng) veículos com mais dias consecutivas a necessitar de recarga");
 
-        double[][] vehiclesConsecutiveRecharges = new double[1][3]; //days, vehicle
         boolean consecutiveRecharge;
-        int maxConsecutiveDaysRecharge = 0;
         int actualConsecutiveDaysRecharge;
-        int actualVehicle = 999;
+        int actualVehicle = 0;
+        int maxConsecutiveDaysRecharge = 0;
 
         for (int i = 0; i < batteryRechargeMatrix.length; i++) {
             consecutiveRecharge = false;
             actualConsecutiveDaysRecharge = 0;
             for (int j = 1; j < batteryRechargeMatrix[0].length; j++) {
-                if (batteryRechargeMatrix[i][j] > 0 && !consecutiveRecharge){
+                if (batteryRechargeMatrix[i][j] > 0 && !consecutiveRecharge) {
                     consecutiveRecharge = true;
                     actualConsecutiveDaysRecharge++;
                 } else if (batteryRechargeMatrix[i][j] > 0 && consecutiveRecharge) {
@@ -181,19 +180,14 @@ public class DB_1230350_1241456 {
                     consecutiveRecharge = false;
                 }
             }
+
             if (actualConsecutiveDaysRecharge > maxConsecutiveDaysRecharge) {
                 maxConsecutiveDaysRecharge = actualConsecutiveDaysRecharge;
                 actualVehicle = i;
             }
         }
 
-        // erro na matriz, print errado
-        // erro no metodo printMatrix,
-        vehiclesConsecutiveRecharges[0][1] = actualVehicle;
-        vehiclesConsecutiveRecharges[0][2] = maxConsecutiveDaysRecharge;
-
-        printMatrix(vehiclesConsecutiveRecharges, format, false, false, "dias consecutivos, veículos :");
-
+        System.out.printf("<%d> dias consecutivos, veículos : [V%d]\n", maxConsecutiveDaysRecharge, actualVehicle);
     }
 
 
@@ -203,7 +197,18 @@ public class DB_1230350_1241456 {
 
 
     //------ EXERCISE I ------
-    public static void i() {
+    public static void rechargesCost(double[][] batteryRechargeMatrix) {
+        System.out.print("\ni) custo das recargas da frota");
+
+        double totalCost = 0;
+
+        for (int i = 0; i < batteryRechargeMatrix.length; i++) {
+            for (int j = 1; j < batteryRechargeMatrix[0].length; j++) {
+                totalCost = totalCost + (batteryRechargeMatrix[i][j] * COST_PER_RECHARGE);
+            }
+        }
+
+        System.out.printf(" <%.2f>", totalCost);
     }
 
 
@@ -274,7 +279,7 @@ public class DB_1230350_1241456 {
                             break;
                         case 4:
                             // print for ex F and G
-                            System.out.printf("<%d> %s [V%d]", (int) matrix[0][2], sufix ,(int) matrix[0][1]);
+                            System.out.printf("<%d> %s [V%d]", (int) matrix[0][2], sufix, (int) matrix[0][1]);
                             j = matrix[i].length;
                             break;
 
