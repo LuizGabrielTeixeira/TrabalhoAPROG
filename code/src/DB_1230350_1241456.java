@@ -19,9 +19,9 @@ public class DB_1230350_1241456 {
 
         planningMatrix(voltDeiMatrix); // a)
         totalTraveledDistance(voltDeiMatrix); // b)
-        double[][] batteryRechargeMatrix = batteryRecharge(voltDeiMatrix, true); // print exercise c) and return matrix
-        dailyCharge(voltDeiMatrix, true); //d
-        averageDayCarsKm(voltDeiMatrix, true); // e)
+        double[][] batteryRechargeMatrix = batteryRecharge(voltDeiMatrix); // print exercise c) and return matrix
+        dailyCharge(voltDeiMatrix, true); //d)
+        averageDayCarsKm(voltDeiMatrix); // e)
         vehiclesWithAnHigherAverage(voltDeiMatrix); // f)
         vehiclesConsecutiveRecharges(batteryRechargeMatrix); // g)
         latestDayWithMoreCharges(voltDeiMatrix); //h
@@ -35,10 +35,10 @@ public class DB_1230350_1241456 {
     //------------ EXERCISES  ------------
     //------ EXERCISE A ------
     public static void planningMatrix(double[][] voltDeiMatrix) {
-        final int format = 1;
+        final int FORMAT = 1;
         System.out.println("a) planeamento (km/dia/veículo)");
 
-        printMatrix(voltDeiMatrix, format, true, true, "");
+        printMatrix(voltDeiMatrix, FORMAT, true, true, "");
     }
 
     //------ EXERCISE B ------
@@ -65,7 +65,7 @@ public class DB_1230350_1241456 {
 
     //------ EXERCISE C ------
     public static double[][] batteryRecharge(double[][] voltDeiMatrix) {
-        final int format = 1;
+        final int FORMAT = 1;
         System.out.println("\nc) recargas das baterias");
 
         int rechargeCounter;
@@ -96,7 +96,7 @@ public class DB_1230350_1241456 {
             }
         }
 
-        printMatrix(batteryRechargeMatrix, format, true, true, "");
+        printMatrix(batteryRechargeMatrix, FORMAT, true, true, "");
         return batteryRechargeMatrix;
     }
 
@@ -187,6 +187,11 @@ public class DB_1230350_1241456 {
                     actualConsecutiveDaysRecharge++;
                 } else if (batteryRechargeMatrix[i][j] == 0) {
                     consecutiveRecharge = false;
+
+                    if (actualConsecutiveDaysRecharge > maxConsecutiveDaysRecharge) {
+                        maxConsecutiveDaysRecharge = actualConsecutiveDaysRecharge;
+                        actualVehicle = i;
+                    }
                 }
             }
 
@@ -345,12 +350,6 @@ public class DB_1230350_1241456 {
                             // print the average with one decimal
                             System.out.printf("%8.1f %s", matrix[i][j], sufix);
                             break;
-                        case 4:
-                            // print for ex F and G
-                            System.out.printf("<%d> %s [V%d]", (int) matrix[0][2], sufix, (int) matrix[0][1]);
-                            j = matrix[i].length;
-                            break;
-
                     }
                 }
             }
