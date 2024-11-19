@@ -17,9 +17,11 @@ public class DB_1230350_1241456 {
 
         planningMatrix(voltDeiMatrix); // a)
         totalTraveledDistance(voltDeiMatrix); // b)
-        batteryRecharge(voltDeiMatrix); // c)
+        double[][] batteryRechargeMatrix = batteryRecharge(voltDeiMatrix); // print exercise c) and return matrix for exercise g)
         dailyCharge(voltDeiMatrix); //d
         averageDayCarsKm(voltDeiMatrix); // e)
+        vehiclesConsecutiveRecharges(batteryRechargeMatrix); // g)
+
     }
 
 
@@ -55,7 +57,7 @@ public class DB_1230350_1241456 {
     }
 
     //------ EXERCISE C ------
-    public static void batteryRecharge(double[][] voltDeiMatrix) {
+    public static double[][] batteryRecharge(double[][] voltDeiMatrix) {
         int format = 1;
         System.out.println("\nc) recargas das baterias");
 
@@ -88,6 +90,8 @@ public class DB_1230350_1241456 {
             }
         }
         printMatrix(batteryRechargeMatrix, format, true, true, "");
+
+        return batteryRechargeMatrix;
     }
 
 
@@ -148,27 +152,62 @@ public class DB_1230350_1241456 {
     }
 
 
-    //f)
+    //------ EXERCISE F ------
     public static void f() {
     }
 
 
-    //g)
-    public static void g() {
+    //------ EXERCISE G ------
+    public static void vehiclesConsecutiveRecharges (double[][] batteryRechargeMatrix) {
+        int format = 4;
+        System.out.println("\ng) veículos com mais dias consecutivas a necessitar de recarga");
+
+        double[][] vehiclesConsecutiveRecharges = new double[1][3]; //days, vehicle
+        boolean consecutiveRecharge;
+        int maxConsecutiveDaysRecharge = 0;
+        int actualConsecutiveDaysRecharge;
+        int actualVehicle = 999;
+
+        for (int i = 0; i < batteryRechargeMatrix.length; i++) {
+            consecutiveRecharge = false;
+            actualConsecutiveDaysRecharge = 0;
+            for (int j = 1; j < batteryRechargeMatrix[0].length; j++) {
+                if (batteryRechargeMatrix[i][j] > 0 && !consecutiveRecharge){
+                    consecutiveRecharge = true;
+                    actualConsecutiveDaysRecharge++;
+                } else if (batteryRechargeMatrix[i][j] > 0 && consecutiveRecharge) {
+                    actualConsecutiveDaysRecharge++;
+                } else if (batteryRechargeMatrix[i][j] == 0) {
+                    consecutiveRecharge = false;
+                }
+            }
+            if (actualConsecutiveDaysRecharge > maxConsecutiveDaysRecharge) {
+                maxConsecutiveDaysRecharge = actualConsecutiveDaysRecharge;
+                actualVehicle = i;
+            }
+        }
+
+        // erro na matriz, print errado
+        // erro no metodo printMatrix,
+        vehiclesConsecutiveRecharges[0][1] = actualVehicle;
+        vehiclesConsecutiveRecharges[0][2] = maxConsecutiveDaysRecharge;
+
+        printMatrix(vehiclesConsecutiveRecharges, format, false, false, "dias consecutivos, veículos :");
+
     }
 
 
-    //h)
+    //------ EXERCISE H ------
     public static void h() {
     }
 
 
-    //i)
+    //------ EXERCISE I ------
     public static void i() {
     }
 
 
-    //j)
+    //------ EXERCISE J ------
     public static void j() {
     }
 
@@ -217,12 +256,12 @@ public class DB_1230350_1241456 {
                 if (j == 0 && format == 3) {
                     String text = "km";
                     System.out.printf("%-3s :", text);
-                } else if (j == 0) {
+                } else if (j == 0 && format != 4) {
                     System.out.printf("V%-3d:", (int) matrix[i][j]);
                 } else {
                     switch (format) {
                         case 1:
-                            //only print the intenger number
+                            //only print the integer number
                             System.out.printf("%8d %s", (int) matrix[i][j], sufix);
                             break;
                         case 2:
@@ -234,8 +273,9 @@ public class DB_1230350_1241456 {
                             System.out.printf("%8.1f %s", matrix[i][j], sufix);
                             break;
                         case 4:
-                            // print for ex g)
-                            System.out.printf("<%d> dias consecutivos, veículos : [V%d]", (int) matrix[0][0], (int) matrix[0][1], sufix);
+                            // print for ex F and G
+                            System.out.printf("<%d> %s [V%d]", (int) matrix[0][2], sufix ,(int) matrix[0][1]);
+                            j = matrix[i].length;
                             break;
 
                     }
