@@ -27,7 +27,7 @@ public class DB_1230350_1241456 {
         latestDayWithMoreCharges(voltDeiMatrix); //h
         rechargesCost(batteryRechargeMatrix); // i)
         preventionVehicle(voltDeiMatrix, PREVENTION_DAY); // j)
-      
+     
         scanner.close();
     }
 
@@ -64,9 +64,10 @@ public class DB_1230350_1241456 {
     }
 
     //------ EXERCISE C ------
-    public static double[][] batteryRecharge(double[][] voltDeiMatrix) {
+    public static double[][] batteryRecharge(double[][] voltDeiMatrix, boolean needToPrint) {
         final int FORMAT = 1;
-        System.out.println("\nc) recargas das baterias");
+        if (needToPrint)
+            System.out.println("\nc) recargas das baterias");
 
         int rechargeCounter;
         int batteryInicialCharge;
@@ -95,14 +96,15 @@ public class DB_1230350_1241456 {
                 batteryRechargeMatrix[i][j] = rechargeCounter;
             }
         }
-
-        printMatrix(batteryRechargeMatrix, FORMAT, true, true, "");
+        if (needToPrint)
+            printMatrix(batteryRechargeMatrix, FORMAT, true, true, "");
         return batteryRechargeMatrix;
     }
 
 
     //------------ EXERCISE D ------------
     public static double[][] dailyCharge(double[][] voltDeiMatrix, boolean needToPrint) {
+        final int FORMAT = 2;
         if (needToPrint)
             System.out.println("\nd) carga das baterias");
         double[][] dailyChargeArray = new double[voltDeiMatrix.length][voltDeiMatrix[0].length];
@@ -133,7 +135,7 @@ public class DB_1230350_1241456 {
             }
         }
         if (needToPrint)
-            printMatrix(dailyChargeArray, 2, true, true, "");
+            printMatrix(dailyChargeArray, FORMAT, true, true, "");
 
         return dailyChargeArray;
     }
@@ -163,7 +165,33 @@ public class DB_1230350_1241456 {
 
 
     //------ EXERCISE F ------
-    public static void f() {
+    public static void vehiclesWithAnHigherAverage(double[][] voltDeiMatrix) {
+
+        System.out.println();
+        System.out.print("f) deslocações sempre acima da média diária");
+
+        double[][] averageDayCarsKmArray = averageDayCarsKm(voltDeiMatrix, false);
+        int[] carsOverAverageArray = new int[voltDeiMatrix.length];
+        int howManyVehicles = 0;
+        int counter;
+
+        for (int rows = 0; rows < voltDeiMatrix.length; rows++) {
+            counter = 0;
+            for (int column = 0; column < voltDeiMatrix[0].length; column++) {
+                if (voltDeiMatrix[rows][column] == averageDayCarsKmArray[0][column]) {
+                    counter++;
+                }
+            }
+            if (counter == averageDayCarsKmArray.length) {
+                howManyVehicles += 1;
+                carsOverAverageArray[rows] = (int) voltDeiMatrix[rows][0];
+            }
+        }
+
+        System.out.printf("\n<%d> veículos : ", howManyVehicles);
+        for (int iteratorToPrint = 0; iteratorToPrint < howManyVehicles; iteratorToPrint++) {
+            System.out.printf("[V%d]", carsOverAverageArray[iteratorToPrint]);
+        }
     }
 
 
@@ -236,7 +264,7 @@ public class DB_1230350_1241456 {
         System.out.println();
         System.out.println();
         System.out.printf("h) dia mais tardio em que todos os veículos necessitam de recarregar <%d>", greaterColumn);
-    }
+    }  
   
     //------ EXERCISE I ------
     public static void rechargesCost(double[][] batteryRechargeMatrix) {
@@ -355,7 +383,5 @@ public class DB_1230350_1241456 {
             }
             System.out.println();
         }
-
     }
-
 }
