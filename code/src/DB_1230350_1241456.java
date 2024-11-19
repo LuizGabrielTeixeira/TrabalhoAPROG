@@ -22,10 +22,12 @@ public class DB_1230350_1241456 {
         dailyCharge(voltDeiMatrix, true); //d)
         averageDayCarsKm(voltDeiMatrix, true); // e)
         vehiclesWithAnHigherAverage(voltDeiMatrix); // f)
-        //g
+        // g)
         latestDayWithMoreCharges(voltDeiMatrix); //h
         // i)
         preventionVehicle(voltDeiMatrix, PREVENTION_DAY);
+
+        scanner.close();
     }
 
 
@@ -62,7 +64,7 @@ public class DB_1230350_1241456 {
 
     //------ EXERCISE C ------
     public static double[][] batteryRecharge(double[][] voltDeiMatrix, boolean needToPrint) {
-        int format = 1;
+        final int FORMAT = 1;
         if (needToPrint)
             System.out.println("\nc) recargas das baterias");
 
@@ -95,7 +97,7 @@ public class DB_1230350_1241456 {
             }
         }
         if (needToPrint)
-            printMatrix(batteryRechargeMatrix, format, true, true, "");
+            printMatrix(batteryRechargeMatrix, FORMAT, true, true, "");
 
         return batteryRechargeMatrix;
     }
@@ -103,6 +105,7 @@ public class DB_1230350_1241456 {
 
     //------------ EXERCISE D ------------
     public static double[][] dailyCharge(double[][] voltDeiMatrix, boolean needToPrint) {
+        final int FORMAT = 2;
         if (needToPrint)
             System.out.println("\nd) carga das baterias");
         double[][] dailyChargeArray = new double[voltDeiMatrix.length][voltDeiMatrix[0].length];
@@ -133,7 +136,7 @@ public class DB_1230350_1241456 {
             }
         }
         if (needToPrint)
-            printMatrix(dailyChargeArray, 2, true, true, "");
+            printMatrix(dailyChargeArray, FORMAT, true, true, "");
 
         return dailyChargeArray;
     }
@@ -234,7 +237,7 @@ public class DB_1230350_1241456 {
         System.out.printf("h) dia mais tardio em que todos os veículos necessitam de recarregar <%d>", greaterColumn);
 
     }
-    
+
     //i)
     public static void i() {
     }
@@ -347,7 +350,5 @@ public class DB_1230350_1241456 {
             }
             System.out.println();
         }
-
     }
-
 }
