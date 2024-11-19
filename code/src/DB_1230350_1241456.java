@@ -6,27 +6,28 @@ public class DB_1230350_1241456 {
 
     // ------ CONSTANTS ------
     static final int FULL_BATTERY = 100;
+    private static final double COST_PER_RECHARGE = 5.5;
 
     static final int PREVENTION_DAY = 4;
 
     // ------ MAIN ------
     public static void main(String[] args) throws FileNotFoundException {
-        File file = new File("TrabalhoAPROG/input.txt");
+        File file = new File("input.txt");
         Scanner scanner = new Scanner(file);
 
         double[][] voltDeiMatrix = matrixBuilder(scanner); // creates the matrix
 
         planningMatrix(voltDeiMatrix); // a)
         totalTraveledDistance(voltDeiMatrix); // b)
-        batteryRecharge(voltDeiMatrix, true); // c)
+        double[][] batteryRechargeMatrix = batteryRecharge(voltDeiMatrix); // print exercise c) and return matrix
         dailyCharge(voltDeiMatrix, true); //d)
-        averageDayCarsKm(voltDeiMatrix, true); // e)
+        averageDayCarsKm(voltDeiMatrix); // e)
         vehiclesWithAnHigherAverage(voltDeiMatrix); // f)
-        // g)
+        vehiclesConsecutiveRecharges(batteryRechargeMatrix); // g)
         latestDayWithMoreCharges(voltDeiMatrix); //h
-        // i)
-        preventionVehicle(voltDeiMatrix, PREVENTION_DAY);
-
+        rechargesCost(batteryRechargeMatrix); // i)
+        preventionVehicle(voltDeiMatrix, PREVENTION_DAY); // j)
+     
         scanner.close();
     }
 
@@ -34,10 +35,10 @@ public class DB_1230350_1241456 {
     //------------ EXERCISES  ------------
     //------ EXERCISE A ------
     public static void planningMatrix(double[][] voltDeiMatrix) {
-        int format = 1;
-        System.out.print("\na) planeamento (km/dia/veículo)\n");
+        final int FORMAT = 1;
+        System.out.println("a) planeamento (km/dia/veículo)");
 
-        printMatrix(voltDeiMatrix, format, true, true, "");
+        printMatrix(voltDeiMatrix, FORMAT, true, true, "");
     }
 
     //------ EXERCISE B ------
@@ -68,17 +69,17 @@ public class DB_1230350_1241456 {
         if (needToPrint)
             System.out.println("\nc) recargas das baterias");
 
+        int rechargeCounter;
+        int batteryInicialCharge;
+        double[][] batteryRechargeMatrix = new double[voltDeiMatrix.length][voltDeiMatrix[0].length];
         //copy the matrix to not change the original
         double[][] voltDeiMatrixCopy = new double[voltDeiMatrix.length][voltDeiMatrix[0].length];
+
         for (int i = 0; i < voltDeiMatrixCopy.length; i++) {
             for (int j = 0; j < voltDeiMatrixCopy[i].length; j++) {
                 voltDeiMatrixCopy[i][j] = voltDeiMatrix[i][j];
             }
         }
-
-        double[][] batteryRechargeMatrix = new double[voltDeiMatrix.length][voltDeiMatrix[0].length];
-        int rechargeCounter;
-        int batteryInicialCharge;
 
         for (int i = 0; i < voltDeiMatrixCopy.length; i++) {
             batteryInicialCharge = FULL_BATTERY;
@@ -92,13 +93,11 @@ public class DB_1230350_1241456 {
                 }
 
                 batteryInicialCharge -= (int) voltDeiMatrixCopy[i][j];
-
                 batteryRechargeMatrix[i][j] = rechargeCounter;
             }
         }
         if (needToPrint)
             printMatrix(batteryRechargeMatrix, FORMAT, true, true, "");
-
         return batteryRechargeMatrix;
     }
 
@@ -143,10 +142,9 @@ public class DB_1230350_1241456 {
 
 
     //------ EXERCISE E ------
-    public static double[][] averageDayCarsKm(double[][] voltDeiMatrix, boolean needToPrint) {
+    public static void averageDayCarsKm(double[][] voltDeiMatrix) {
         final int FORMAT = 3;
-        if (needToPrint)
-            System.out.println("\ne) média de km diários da frota");
+        System.out.println("\ne) média de km diários da frota");
 
         double[][] averageKmMatrix = new double[1][voltDeiMatrix[0].length];
         double sumKilometers;
@@ -162,12 +160,9 @@ public class DB_1230350_1241456 {
             averageKmMatrix[0][i] = average;
         }
 
-        if (needToPrint) {
-            printMatrix(averageKmMatrix, FORMAT, true, true, "");
-        }
-
-        return averageKmMatrix;
+        printMatrix(averageKmMatrix, FORMAT, true, true, "");
     }
+
 
     //------ EXERCISE F ------
     public static void vehiclesWithAnHigherAverage(double[][] voltDeiMatrix) {
@@ -199,8 +194,42 @@ public class DB_1230350_1241456 {
         }
     }
 
-    //g)
-    public static void g() {
+
+    //------ EXERCISE G ------
+    public static void vehiclesConsecutiveRecharges(double[][] batteryRechargeMatrix) {
+        System.out.println("\ng) veículos com mais dias consecutivas a necessitar de recarga");
+
+        boolean consecutiveRecharge;
+        int actualConsecutiveDaysRecharge;
+        int actualVehicle = 0;
+        int maxConsecutiveDaysRecharge = 0;
+
+        for (int i = 0; i < batteryRechargeMatrix.length; i++) {
+            consecutiveRecharge = false;
+            actualConsecutiveDaysRecharge = 0;
+            for (int j = 1; j < batteryRechargeMatrix[0].length; j++) {
+                if (batteryRechargeMatrix[i][j] > 0 && !consecutiveRecharge) {
+                    consecutiveRecharge = true;
+                    actualConsecutiveDaysRecharge++;
+                } else if (batteryRechargeMatrix[i][j] > 0 && consecutiveRecharge) {
+                    actualConsecutiveDaysRecharge++;
+                } else if (batteryRechargeMatrix[i][j] == 0) {
+                    consecutiveRecharge = false;
+
+                    if (actualConsecutiveDaysRecharge > maxConsecutiveDaysRecharge) {
+                        maxConsecutiveDaysRecharge = actualConsecutiveDaysRecharge;
+                        actualVehicle = i;
+                    }
+                }
+            }
+
+            if (actualConsecutiveDaysRecharge > maxConsecutiveDaysRecharge) {
+                maxConsecutiveDaysRecharge = actualConsecutiveDaysRecharge;
+                actualVehicle = i;
+            }
+        }
+
+        System.out.printf("<%d> dias consecutivos, veículos : [V%d]\n", maxConsecutiveDaysRecharge, actualVehicle);
     }
 
 
@@ -235,11 +264,21 @@ public class DB_1230350_1241456 {
         System.out.println();
         System.out.println();
         System.out.printf("h) dia mais tardio em que todos os veículos necessitam de recarregar <%d>", greaterColumn);
+    }  
+  
+    //------ EXERCISE I ------
+    public static void rechargesCost(double[][] batteryRechargeMatrix) {
+        System.out.print("\ni) custo das recargas da frota");
 
-    }
+        double totalCost = 0;
 
-    //i)
-    public static void i() {
+        for (int i = 0; i < batteryRechargeMatrix.length; i++) {
+            for (int j = 1; j < batteryRechargeMatrix[0].length; j++) {
+                totalCost = totalCost + (batteryRechargeMatrix[i][j] * COST_PER_RECHARGE);
+            }
+        }
+
+        System.out.printf(" <%.2f>", totalCost);
     }
 
 
@@ -295,8 +334,7 @@ public class DB_1230350_1241456 {
     }
 
     //------ AUX -> METHOD THAT PRINTS ANY MATRIX ------
-    public static void printMatrix(double[][] matrix, int format, boolean barOnTop, boolean dayMessage, String
-            sufix) {
+    public static void printMatrix(double[][] matrix, int format, boolean barOnTop, boolean dayMessage, String sufix) {
         int quantityOfDays = matrix[0].length - 1;
 
         if (dayMessage) {
@@ -324,12 +362,12 @@ public class DB_1230350_1241456 {
                 if (j == 0 && format == 3) {
                     String text = "km";
                     System.out.printf("%-3s :", text);
-                } else if (j == 0) {
+                } else if (j == 0 && format != 4) {
                     System.out.printf("V%-3d:", (int) matrix[i][j]);
                 } else {
                     switch (format) {
                         case 1:
-                            //only print the intenger number
+                            //only print the integer number
                             System.out.printf("%8d %s", (int) matrix[i][j], sufix);
                             break;
                         case 2:
@@ -340,11 +378,6 @@ public class DB_1230350_1241456 {
                             // print the average with one decimal
                             System.out.printf("%8.1f %s", matrix[i][j], sufix);
                             break;
-                        case 4:
-                            // print for ex g)
-                            System.out.printf("<%d> dias consecutivos, veículos : [V%d]", (int) matrix[0][0], (int) matrix[0][1], sufix);
-                            break;
-
                     }
                 }
             }
