@@ -6,8 +6,8 @@ public class DB_1230350_1241456 {
 
     // ------ CONSTANTS ------
     static final int FULL_BATTERY = 100;
-    static final int PREVENTION_DAY = 4;
-    static final int EXTRA_COLUMN = 1;
+    static final int PREVENTION_DAY = 0; // day that the user wants to choose for exercise J
+    static final int EXTRA_COLUMN = 1; // because the first column is the vehicle number
     static final double COST_PER_RECHARGE = 5.5;
 
     // ------ MAIN ------
@@ -15,7 +15,7 @@ public class DB_1230350_1241456 {
         File file = new File("input.txt");
         Scanner scanner = new Scanner(file);
 
-        double[][] voltDeiMatrix = matrixBuilder(scanner); // creates the matrix
+        double[][] voltDeiMatrix = matrixBuilder(scanner); // creates the matrix, with the first column being the vehicle number
 
         planningMatrix(voltDeiMatrix); // a)
         totalTraveledDistance(voltDeiMatrix); // b)
@@ -52,7 +52,7 @@ public class DB_1230350_1241456 {
 
         int totalDistance = 0;
         int numberOfRows = voltDeiMatrix.length;
-        double[][] totalDistanceArray = new double[(int) numberOfRows][2];
+        double[][] totalDistanceArray = new double[numberOfRows][2];
 
 
         for (int rowNumber = 0; rowNumber < numberOfRows; rowNumber++) {
@@ -77,10 +77,12 @@ public class DB_1230350_1241456 {
 
         int rechargeCounter;
         int batteryInicialCharge;
-        double[][] batteryRechargeMatrix = new double[voltDeiMatrix.length][voltDeiMatrix[0].length];
 
-        //copy the matrix to not change the original
+        double[][] batteryRechargeMatrix = new double[voltDeiMatrix.length][voltDeiMatrix[0].length];
+        // same size as the voltDeiMatrix, with the first column being the vehicle number
+
         double[][] voltDeiMatrixCopy = new double[voltDeiMatrix.length][voltDeiMatrix[0].length];
+        //copy the matrix to not change the original
 
         for (int i = 0; i < voltDeiMatrixCopy.length; i++) {
             for (int j = 0; j < voltDeiMatrixCopy[i].length; j++) {
@@ -327,7 +329,7 @@ public class DB_1230350_1241456 {
         double quantityOfDays = scanner.nextDouble();
 
         double[][] voltDeiMatrix;
-        voltDeiMatrix = new double[(int) quantityOfVehicles][(int) (quantityOfDays + 1)];
+        voltDeiMatrix = new double[(int) quantityOfVehicles][(int) (quantityOfDays + 1)]; // +1 because the first column is the vehicle number
 
         for (int i = 0; i < voltDeiMatrix.length; i++) {
             for (int j = 1; j < voltDeiMatrix[i].length; j++) {
@@ -370,7 +372,7 @@ public class DB_1230350_1241456 {
                     String text = "km";
                     System.out.printf("%-3s :", text);
 
-                } else if (j == 0 && format != 4) {
+                } else if (j == 0) {
                     System.out.printf("V%-3d:", (int) matrix[i][j]);
 
                 } else {
