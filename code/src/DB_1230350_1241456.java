@@ -7,7 +7,7 @@ public class DB_1230350_1241456 {
 
     // ------ CONSTANTS ------
     static final int FULL_BATTERY = 100;
-    static final int PREVENTION_DAY = 0; // day that the user wants to choose for exercise J
+    static final int PREVENTION_DAY = 4; // day that the user wants to choose for exercise J
     static final int EXTRA_COLUMN = 1; // because the first column is the vehicle number
     static final double COST_PER_RECHARGE = 5.5;
 
@@ -269,7 +269,7 @@ public class DB_1230350_1241456 {
         } else {
             maxConsecutiveDaysRecharge = maxConsecutiveDaysCalculator(maxConsecutiveDaysPerVehicle);
 
-            System.out.printf(" <%d> dias consecutivos, veículos :", maxConsecutiveDaysRecharge);
+            System.out.printf("\n<%d> dias consecutivos, veículos :", maxConsecutiveDaysRecharge);
 
             for (int i = 0; i < maxConsecutiveDaysPerVehicle.length; i++) {
                 if (maxConsecutiveDaysPerVehicle[i] == maxConsecutiveDaysRecharge) {
