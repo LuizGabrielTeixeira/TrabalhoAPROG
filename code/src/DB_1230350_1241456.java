@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class DB_1230350_1241456 {
@@ -11,17 +12,35 @@ public class DB_1230350_1241456 {
     static final double COST_PER_RECHARGE = 5.5;
 
     // ------ MAIN ------
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         File file = new File("input.txt");
-        Scanner scanner = new Scanner(file);
+        Scanner scanner;
+        double[][] voltDeiMatrix;
 
-        double[][] voltDeiMatrix = matrixBuilder(scanner); // creates the matrix, with the first column being the vehicle number
+        try {
+            scanner = new Scanner(file);
+
+            try {
+                voltDeiMatrix = matrixBuilder(scanner);
+                // creates the matrix, with the first column being the vehicle number
+            } catch (NoSuchElementException e) {
+                System.out.println("Erro na leitura do ficheiro, algo está mal formatado!");
+                // throws an error if the input is not correct
+                scanner.close();
+                return;
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.printf("O seguinte ficheiro não foi encontrado: '%s'.\n", file);
+            // throws an error if the file is not found
+            return;
+        }
 
         planningMatrix(voltDeiMatrix); // a)
         totalTraveledDistance(voltDeiMatrix); // b)
-        double[][] batteryRechargeMatrix = batteryRecharge(voltDeiMatrix); // print exercise c) and return matrix
-        double[][] dailyChargeArray = dailyCharge(voltDeiMatrix); //print exercise d) and return matrix
-        double[][] averageKmMatrix = averageDayCarsKm(voltDeiMatrix); // print exercise e) and return matrix
+        double[][] batteryRechargeMatrix = batteryRecharge(voltDeiMatrix); // print c) and return matrix
+        double[][] dailyChargeArray = dailyCharge(voltDeiMatrix); //print d) and return matrix
+        double[][] averageKmMatrix = averageDayCarsKm(voltDeiMatrix); // print e) and return matrix
         vehiclesWithAnHigherAverage(voltDeiMatrix, averageKmMatrix); // f)
         vehiclesConsecutiveRecharges(batteryRechargeMatrix); // g)
         latestDayWithMoreCharges(voltDeiMatrix, dailyChargeArray); // h)
@@ -302,7 +321,7 @@ public class DB_1230350_1241456 {
         }
 
         if (totalCost == 0) {
-            System.out.print("- não houveram recargas, logo não há custos!");
+            System.out.print("\n- não houveram recargas, logo não há custos!");
         } else {
             System.out.printf(" <%.2f €>", totalCost);
         }
@@ -350,7 +369,8 @@ public class DB_1230350_1241456 {
         double quantityOfDays = scanner.nextDouble();
 
         double[][] voltDeiMatrix;
-        voltDeiMatrix = new double[(int) quantityOfVehicles][(int) (quantityOfDays + 1)]; // +1 because the first column is the vehicle number
+        voltDeiMatrix = new double[(int) quantityOfVehicles][(int) (quantityOfDays + 1)];
+        // +1 because the first column is the vehicle number
 
         for (int i = 0; i < voltDeiMatrix.length; i++) {
             for (int j = 1; j < voltDeiMatrix[i].length; j++) {
@@ -361,7 +381,7 @@ public class DB_1230350_1241456 {
     }
 
     //------ AUX -> METHOD THAT CALCULATES THE HIGHEST NUMBER OF RECHARGES
-    public static int maxConsecutiveDaysCalculator (int[] maxConsecutiveDaysPerVehicle) {
+    public static int maxConsecutiveDaysCalculator(int[] maxConsecutiveDaysPerVehicle) {
         int maxConsecutiveDaysRecharge = 0;
 
         for (int i = 0; i < maxConsecutiveDaysPerVehicle.length; i++) {
@@ -399,7 +419,7 @@ public class DB_1230350_1241456 {
         }
 
         for (int i = 0; i < matrix.length; i++) {
-            matrix[i][0] = (i);
+            matrix[i][0] = (i); // vehicle number (first column)
 
             for (int j = 0; j < matrix[i].length; j++) {
                 if (j == 0 && format == 3) {
