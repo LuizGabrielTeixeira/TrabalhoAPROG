@@ -243,9 +243,9 @@ public class DB_1230350_1241456 {
         }
 
         if (maxConsecutiveDaysRecharge == 0) {
-            System.out.println("nenhum veiculo precisou de recarga!");
+            System.out.println("- nenhum veiculo precisou de recarga!");
         } else {
-            System.out.printf("<%d> dias consecutivos, veículos : [V%d]\n", maxConsecutiveDaysRecharge, actualVehicle);
+            System.out.printf(" <%d> dias consecutivos, veículos : [V%d]\n", maxConsecutiveDaysRecharge, actualVehicle);
         }
     }
 
@@ -279,7 +279,7 @@ public class DB_1230350_1241456 {
 
     //------ EXERCISE I ------
     public static void rechargesCost(double[][] batteryRechargeMatrix) {
-        System.out.print("\ni) custo das recargas da frota");
+        System.out.print("\ni) custo das recargas da frota :");
 
         double totalCost = 0;
 
@@ -289,7 +289,11 @@ public class DB_1230350_1241456 {
             }
         }
 
-        System.out.printf(" <%.2f>", totalCost);
+        if (totalCost == 0) {
+            System.out.print("- não houveram recargas, logo não há custos!");
+        } else {
+            System.out.printf(" <%.2f €>", totalCost);
+        }
     }
 
 
