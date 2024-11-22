@@ -7,7 +7,9 @@
 #### Luiz Gabriel de Souza Sargaço Teixeira (1230350) 
 #### Bernardo Carvalho Correia (1241456)
 
-## Divisão de tarefas:
-#### gabriel : itens: A,C,E,G e I
-#### bernardo : itens: B,D,F,H e J
+## Divisão de questões:
+#### Gabriel: A,C,E,G e I
+#### Bernardo: B,D,F,H e J
 
+## Enunciado:
+#### [Trabalho APROG.pdf](Trabalho%20APROG.pdf)
