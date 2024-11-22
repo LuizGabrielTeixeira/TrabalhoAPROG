@@ -249,7 +249,7 @@ public class DB_1230350_1241456 {
         }
 
         if (maxConsecutiveDaysRecharge == 0) {
-            System.out.println("- nenhum veiculo precisou de recarga!");
+            System.out.print("\n- nenhum veiculo precisou de recarga!\n");
         } else {
             System.out.printf(" <%d> dias consecutivos, veículos :", maxConsecutiveDaysRecharge);
 
