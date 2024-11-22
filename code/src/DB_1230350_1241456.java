@@ -206,12 +206,18 @@ public class DB_1230350_1241456 {
 
     //------ EXERCISE G ------
     public static void vehiclesConsecutiveRecharges(double[][] batteryRechargeMatrix) {
-        System.out.println("\ng) veículos com mais dias consecutivas a necessitar de recarga :");
+        System.out.print("\ng) veículos com mais dias consecutivas a necessitar de recarga :");
 
         boolean consecutiveRecharge;
         int actualConsecutiveDaysRecharge;
-        int actualVehicle = 0;
+        int[] actualVehicle = new int[batteryRechargeMatrix.length];
         int maxConsecutiveDaysRecharge = 0;
+
+        // initialize all positions of the array with -1
+        for (int i = 0; i < actualVehicle.length; i++) {
+            actualVehicle[i] = -1;
+        }
+
 
         for (int i = 0; i < batteryRechargeMatrix.length; i++) {
             consecutiveRecharge = false;
@@ -230,22 +236,29 @@ public class DB_1230350_1241456 {
 
                     if (actualConsecutiveDaysRecharge > maxConsecutiveDaysRecharge) {
                         maxConsecutiveDaysRecharge = actualConsecutiveDaysRecharge;
-                        actualVehicle = i;
+                        actualVehicle[i] = i;
                     }
                     actualConsecutiveDaysRecharge = 0;
                 }
             }
 
-            if (actualConsecutiveDaysRecharge > maxConsecutiveDaysRecharge) {
+            if (actualConsecutiveDaysRecharge >= maxConsecutiveDaysRecharge) {
                 maxConsecutiveDaysRecharge = actualConsecutiveDaysRecharge;
-                actualVehicle = i;
+                actualVehicle[i] = i;
             }
         }
 
         if (maxConsecutiveDaysRecharge == 0) {
             System.out.println("- nenhum veiculo precisou de recarga!");
         } else {
-            System.out.printf(" <%d> dias consecutivos, veículos : [V%d]\n", maxConsecutiveDaysRecharge, actualVehicle);
+            System.out.printf(" <%d> dias consecutivos, veículos :", maxConsecutiveDaysRecharge);
+
+            for (int i = 0; i < actualVehicle.length; i++) {
+                if (actualVehicle[i] > -1) {
+                    System.out.printf(" [V%d] ", actualVehicle[i]);
+                }
+            }
+            System.out.println();
         }
     }
 
