@@ -26,7 +26,7 @@ public class DB_1230350_1241456 {
         vehiclesConsecutiveRecharges(batteryRechargeMatrix); // g)
         latestDayWithMoreCharges(voltDeiMatrix, dailyChargeArray); // h)
         rechargesCost(batteryRechargeMatrix); // i)
-        preventionVehicle(voltDeiMatrix, dailyChargeArray,PREVENTION_DAY); // j)
+        preventionVehicle(voltDeiMatrix, dailyChargeArray, PREVENTION_DAY); // j)
 
         scanner.close();
     }
@@ -206,7 +206,7 @@ public class DB_1230350_1241456 {
 
     //------ EXERCISE G ------
     public static void vehiclesConsecutiveRecharges(double[][] batteryRechargeMatrix) {
-        System.out.println("\ng) veículos com mais dias consecutivas a necessitar de recarga");
+        System.out.println("\ng) veículos com mais dias consecutivas a necessitar de recarga :");
 
         boolean consecutiveRecharge;
         int actualConsecutiveDaysRecharge;
@@ -232,6 +232,7 @@ public class DB_1230350_1241456 {
                         maxConsecutiveDaysRecharge = actualConsecutiveDaysRecharge;
                         actualVehicle = i;
                     }
+                    actualConsecutiveDaysRecharge = 0;
                 }
             }
 
@@ -241,7 +242,11 @@ public class DB_1230350_1241456 {
             }
         }
 
-        System.out.printf("<%d> dias consecutivos, veículos : [V%d]\n", maxConsecutiveDaysRecharge, actualVehicle);
+        if (maxConsecutiveDaysRecharge == 0) {
+            System.out.println("nenhum veiculo precisou de recarga!");
+        } else {
+            System.out.printf("<%d> dias consecutivos, veículos : [V%d]\n", maxConsecutiveDaysRecharge, actualVehicle);
+        }
     }
 
 
@@ -289,7 +294,7 @@ public class DB_1230350_1241456 {
 
 
     //------ EXERCISE J ------
-    public static void preventionVehicle(double[][] voltDeiMatrix, double[][] dailyChargeArray,int preventionDay) {
+    public static void preventionVehicle(double[][] voltDeiMatrix, double[][] dailyChargeArray, int preventionDay) {
 
         int carCharge;
         int carKilometers;
