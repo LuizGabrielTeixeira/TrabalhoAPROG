@@ -219,14 +219,14 @@ public class DB_1230350_1241456 {
             }
         }
 
-        if (howManyVehicles > 0){
-        System.out.printf("\n<%d> veículos : ", howManyVehicles);
+        if (howManyVehicles > 0) {
+            System.out.printf("\n<%d> veículos : ", howManyVehicles);
 
-        for (int iteratorToPrint = 0; iteratorToPrint < howManyVehicles; iteratorToPrint++) {
-            System.out.printf("[V%d]", carOverAverageArray[iteratorToPrint]);
-        }
-        System.out.println();}
-        else {
+            for (int iteratorToPrint = 0; iteratorToPrint < howManyVehicles; iteratorToPrint++) {
+                System.out.printf("[V%d]", carOverAverageArray[iteratorToPrint]);
+            }
+            System.out.println();
+        } else {
             System.out.println("\n- nenhum veículo fez deslocações sempre acima da média diária!");
         }
     }
@@ -265,8 +265,10 @@ public class DB_1230350_1241456 {
             } else {
                 if (actualConsecutiveDaysRecharge > maxConsecutiveDaysRecharge) {
                     maxConsecutiveDaysRecharge = actualConsecutiveDaysRecharge;
+                    maxConsecutiveDaysPerVehicle[i] = maxConsecutiveDaysRecharge;
+                } else {
+                    maxConsecutiveDaysPerVehicle[i] = actualConsecutiveDaysRecharge;
                 }
-                maxConsecutiveDaysPerVehicle[i] = maxConsecutiveDaysRecharge;
             }
         }
 
