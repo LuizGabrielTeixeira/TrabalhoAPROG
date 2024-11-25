@@ -214,12 +214,16 @@ public class DB_1230350_1241456 {
             }
         }
 
+        if (howManyVehicles > 0){
         System.out.printf("\n<%d> veículos : ", howManyVehicles);
 
         for (int iteratorToPrint = 0; iteratorToPrint < howManyVehicles; iteratorToPrint++) {
             System.out.printf("[V%d]", carOverAverageArray[iteratorToPrint]);
         }
-        System.out.println();
+        System.out.println();}
+        else {
+            System.out.println("\n- nenhum veículo fez deslocações sempre acima da média diária!\n");
+        }
     }
 
 
