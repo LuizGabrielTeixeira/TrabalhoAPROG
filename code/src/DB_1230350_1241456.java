@@ -231,58 +231,44 @@ public class DB_1230350_1241456 {
         }
     }
 
-
-    //------ EXERCISE G ------
+//------ EXERCISE G ------
     public static void vehiclesConsecutiveRecharges(double[][] batteryRechargeMatrix) {
         System.out.print("\ng) veículos com mais dias consecutivas a necessitar de recarga :");
 
-        int counter;
         int actualConsecutiveDaysRecharge;
-        int maxConsecutiveDaysRecharge = 0;
+        int maxConsecutiveDaysRechargePerVehicle;
 
         int[] maxConsecutiveDaysPerVehicle = new int[batteryRechargeMatrix.length];
 
         for (int i = 0; i < batteryRechargeMatrix.length; i++) {
-            counter = 0;
             actualConsecutiveDaysRecharge = 0;
+            maxConsecutiveDaysRechargePerVehicle = 0;
 
             for (int j = 1; j < batteryRechargeMatrix[0].length; j++) {
                 if (batteryRechargeMatrix[i][j] > 0) {
-                    counter++;
                     actualConsecutiveDaysRecharge++;
-
-                } else {
-                    if (actualConsecutiveDaysRecharge > maxConsecutiveDaysRecharge) {
-                        maxConsecutiveDaysRecharge = actualConsecutiveDaysRecharge;
+                    if (actualConsecutiveDaysRecharge > maxConsecutiveDaysRechargePerVehicle) {
+                        maxConsecutiveDaysRechargePerVehicle = actualConsecutiveDaysRecharge;
                     }
+                } else {
                     actualConsecutiveDaysRecharge = 0;
                 }
             }
 
-            if (counter == 0) {
-                maxConsecutiveDaysPerVehicle[i] = 0;
-
-            } else {
-                if (actualConsecutiveDaysRecharge > maxConsecutiveDaysRecharge) {
-                    maxConsecutiveDaysRecharge = actualConsecutiveDaysRecharge;
-                    maxConsecutiveDaysPerVehicle[i] = maxConsecutiveDaysRecharge;
-                } else {
-                    maxConsecutiveDaysPerVehicle[i] = actualConsecutiveDaysRecharge;
-                }
-            }
+            maxConsecutiveDaysPerVehicle[i] = maxConsecutiveDaysRechargePerVehicle;
         }
+
+        int maxConsecutiveDaysRecharge = maxValueCalculator(maxConsecutiveDaysPerVehicle);
 
         if (maxConsecutiveDaysRecharge == 0) {
             System.out.print("\n- nenhum veiculo precisou de recarga!\n");
 
         } else {
-            maxConsecutiveDaysRecharge = maxValueCalculator(maxConsecutiveDaysPerVehicle);
-
             System.out.printf("\n<%d> dias consecutivos, veículos :", maxConsecutiveDaysRecharge);
 
             for (int i = 0; i < maxConsecutiveDaysPerVehicle.length; i++) {
                 if (maxConsecutiveDaysPerVehicle[i] == maxConsecutiveDaysRecharge) {
-                    System.out.printf(" [V%d] ", i);
+                    System.out.printf("[V%d]", i);
                 }
             }
             System.out.println();
