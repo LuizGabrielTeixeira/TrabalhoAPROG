@@ -54,25 +54,23 @@ public class DB_1230350_1241456 {
     //------------ EXERCISES  ------------
     //------ EXERCISE A ------
     public static void planningMatrix(double[][] voltDeiMatrix) {
+        final int FORMAT = 1;
 
         System.out.println("a) planeamento (km/dia/veículo)");
-
-        final int FORMAT = 1;
 
         printMatrix(voltDeiMatrix, FORMAT, true, true, "");
     }
 
     //------ EXERCISE B ------
     public static void totalTraveledDistance(double[][] voltDeiMatrix) {
+        final int FORMAT = 1;
 
         System.out.println("\nb) total de km a percorrer");
 
-        final int FORMAT = 1;
-
         int totalDistance = 0;
         int numberOfRows = voltDeiMatrix.length;
-        double[][] totalDistanceArray = new double[numberOfRows][2];
 
+        double[][] totalDistanceArray = new double[numberOfRows][2];
 
         for (int rowNumber = 0; rowNumber < numberOfRows; rowNumber++) {
             for (int columnNumber = 1; columnNumber < voltDeiMatrix[rowNumber].length; columnNumber++) {
@@ -89,10 +87,9 @@ public class DB_1230350_1241456 {
 
     //------ EXERCISE C ------
     public static double[][] batteryRecharge(double[][] voltDeiMatrix) {
+        final int FORMAT = 1;
 
         System.out.println("\nc) recargas das baterias");
-
-        final int FORMAT = 1;
 
         int rechargeCounter;
         int batteryInicialCharge;
@@ -126,21 +123,22 @@ public class DB_1230350_1241456 {
         }
 
         printMatrix(batteryRechargeMatrix, FORMAT, true, true, "");
+
         return batteryRechargeMatrix;
     }
 
 
     //------------ EXERCISE D ------------
     public static double[][] dailyCharge(double[][] voltDeiMatrix) {
+        final int FORMAT = 2;
 
         System.out.println("\nd) carga das baterias");
 
-        final int FORMAT = 2;
-
-        double[][] dailyChargeArray = new double[voltDeiMatrix.length][voltDeiMatrix[0].length];
+        double totalBattery;
         double partialBattery;
         double remainderBattery;
-        double totalBattery;
+
+        double[][] dailyChargeArray = new double[voltDeiMatrix.length][voltDeiMatrix[0].length];
 
         for (int rows = 0; rows < voltDeiMatrix.length; rows++) {
             remainderBattery = 0;
@@ -165,6 +163,7 @@ public class DB_1230350_1241456 {
         }
 
         printMatrix(dailyChargeArray, FORMAT, true, true, "");
+
         return dailyChargeArray;
     }
 
@@ -172,12 +171,15 @@ public class DB_1230350_1241456 {
     //------ EXERCISE E ------
     public static double[][] averageDayCarsKm(double[][] voltDeiMatrix) {
         final int FORMAT = 3;
+
         System.out.println("\ne) média de km diários da frota");
 
-        double[][] averageKmMatrix = new double[1][voltDeiMatrix[0].length];
+        double average;
         double sumKilometers;
         double divisor = voltDeiMatrix.length;
-        double average;
+
+        double[][] averageKmMatrix = new double[1][voltDeiMatrix[0].length];
+
 
         for (int i = 1; i < voltDeiMatrix[0].length; i++) {
             sumKilometers = 0;
@@ -189,6 +191,7 @@ public class DB_1230350_1241456 {
         }
 
         printMatrix(averageKmMatrix, FORMAT, true, true, "");
+
         return averageKmMatrix;
     }
 
@@ -197,9 +200,11 @@ public class DB_1230350_1241456 {
     public static void vehiclesWithAnHigherAverage(double[][] voltDeiMatrix, double[][] averageKmMatrix) {
         System.out.print("\nf) deslocações sempre acima da média diária");
 
-        int[] carOverAverageArray = new int[voltDeiMatrix.length];
-        int howManyVehicles = 0;
         int counter;
+        int howManyVehicles = 0;
+
+        int[] carOverAverageArray = new int[voltDeiMatrix.length];
+
 
         for (int rows = 0; rows < voltDeiMatrix.length; rows++) {
             counter = 0;
@@ -222,7 +227,7 @@ public class DB_1230350_1241456 {
         }
         System.out.println();}
         else {
-            System.out.println("\n- nenhum veículo fez deslocações sempre acima da média diária!\n");
+            System.out.println("\n- nenhum veículo fez deslocações sempre acima da média diária!");
         }
     }
 
@@ -231,19 +236,20 @@ public class DB_1230350_1241456 {
     public static void vehiclesConsecutiveRecharges(double[][] batteryRechargeMatrix) {
         System.out.print("\ng) veículos com mais dias consecutivas a necessitar de recarga :");
 
-        int actualConsecutiveDaysRecharge;
-        int[] maxConsecutiveDaysPerVehicle = new int[batteryRechargeMatrix.length];
-        int maxConsecutiveDaysRecharge = 0;
         int counter;
+        int actualConsecutiveDaysRecharge;
+        int maxConsecutiveDaysRecharge = 0;
+
+        int[] maxConsecutiveDaysPerVehicle = new int[batteryRechargeMatrix.length];
 
         for (int i = 0; i < batteryRechargeMatrix.length; i++) {
-            actualConsecutiveDaysRecharge = 0;
             counter = 0;
+            actualConsecutiveDaysRecharge = 0;
 
             for (int j = 1; j < batteryRechargeMatrix[0].length; j++) {
                 if (batteryRechargeMatrix[i][j] > 0) {
-                    actualConsecutiveDaysRecharge++;
                     counter++;
+                    actualConsecutiveDaysRecharge++;
 
                 } else {
                     if (actualConsecutiveDaysRecharge > maxConsecutiveDaysRecharge) {
@@ -260,7 +266,6 @@ public class DB_1230350_1241456 {
                 if (actualConsecutiveDaysRecharge > maxConsecutiveDaysRecharge) {
                     maxConsecutiveDaysRecharge = actualConsecutiveDaysRecharge;
                 }
-
                 maxConsecutiveDaysPerVehicle[i] = maxConsecutiveDaysRecharge;
             }
         }
@@ -285,9 +290,10 @@ public class DB_1230350_1241456 {
 
     //------ EXERCISE H ------
     public static void latestDayWithMoreCharges(double[][] voltDeiMatrix, double[][] dailyChargeArray) {
+
+        int greaterColumn = 0;
         int numberOfCharges = 0;
         int numberOfMaxCharges = Integer.MAX_VALUE;
-        int greaterColumn = 0;
 
         for (int columns = 1; columns < dailyChargeArray[0].length; columns++) {
             numberOfCharges = 0;
@@ -335,9 +341,10 @@ public class DB_1230350_1241456 {
 
         int carCharge;
         int carKilometers;
-        int lastCarCharge = Integer.MIN_VALUE;
-        int lastcarKilometers = Integer.MAX_VALUE;
         int preventionVehicle = -1;
+        int lastCarCharge = Integer.MIN_VALUE;
+        int lastCarKilometers = Integer.MAX_VALUE;
+
         int[] preventionVehicleArray = new int[voltDeiMatrix.length];
 
 //        for (int i = 0; i < preventionVehicleArray.length; i++) {
@@ -349,12 +356,12 @@ public class DB_1230350_1241456 {
             carCharge = (int) dailyChargeArray[rows][preventionDay + EXTRA_COLUMN];
 
 
-            if (lastcarKilometers > carKilometers) {
-                lastcarKilometers = carKilometers;
+            if (lastCarKilometers > carKilometers) {
+                lastCarKilometers = carKilometers;
                 lastCarCharge = carCharge;
                 preventionVehicle = rows;
 
-            } else if (lastcarKilometers == carKilometers) {
+            } else if (lastCarKilometers == carKilometers) {
                 if (lastCarCharge < carCharge) {
                     lastCarCharge = carCharge;
                     preventionVehicle = rows;
@@ -376,14 +383,15 @@ public class DB_1230350_1241456 {
     //------ EXERCISE J ------ 2nd version
     public static void preventionVehicle2(double[][] voltDeiMatrix, double[][] dailyChargeArray, int solicitedDay) {
 
-        int preventionDay = solicitedDay + EXTRA_COLUMN;
-        int[] kilometerArray = new int[voltDeiMatrix.length];
-        int[] vehicleArray = new int[voltDeiMatrix.length];
-        int[] chargeArray = new int[voltDeiMatrix.length];
-        int minKilometerRegistered;
-        int maxChargeRegistered;
         int preventionVehicle = -1;
+        int maxChargeRegistered;
+        int minKilometerRegistered;
         boolean vehicleFinder = false;
+        int preventionDay = solicitedDay + EXTRA_COLUMN;
+
+        int[] chargeArray = new int[voltDeiMatrix.length];
+        int[] vehicleArray = new int[voltDeiMatrix.length];
+        int[] kilometerArray = new int[voltDeiMatrix.length];
 
         for (int i = 0; i < voltDeiMatrix.length; i++) {
             kilometerArray[i] = (int) voltDeiMatrix[i][preventionDay];
@@ -415,7 +423,6 @@ public class DB_1230350_1241456 {
         }
 
         System.out.printf("%n%nj) veículo de prevenção no dia <%d> : V%d", PREVENTION_DAY, preventionVehicle);
-
     }
 
 
@@ -453,6 +460,7 @@ public class DB_1230350_1241456 {
         return maxValue;
     }
 
+    //------ AUX -> METHOD THAT CALCULATES THE LOWEST NUMBER OF RECHARGES
     public static int minValueCalculator(int[] matrix) {
         int minValue = Integer.MAX_VALUE;
 
@@ -466,8 +474,7 @@ public class DB_1230350_1241456 {
     }
 
     //------ AUX -> METHOD THAT PRINTS ANY MATRIX ------
-    public static void printMatrix(double[][] matrix, int format, boolean barOnTop, boolean dayMessage, String
-            sufix) {
+    public static void printMatrix(double[][] matrix, int format, boolean barOnTop, boolean dayMessage, String sufix) {
         int quantityOfDays = matrix[0].length - EXTRA_COLUMN;
 
         if (dayMessage) {
