@@ -13,6 +13,7 @@ public class DB_1230350_1241456 {
 
     // ------ MAIN ------
     public static void main(String[] args) {
+
         File file = new File("input.txt");
         Scanner scanner;
         double[][] voltDeiMatrix;
