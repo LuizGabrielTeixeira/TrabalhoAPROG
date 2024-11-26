@@ -45,7 +45,7 @@ public class DB_1230350_1241456 {
         vehiclesConsecutiveRecharges(batteryRechargeMatrix); // g)
         latestDayWithMoreCharges(batteryRechargeMatrix); // h)
         rechargesCost(batteryRechargeMatrix); // i)
-        preventionVehicle2(voltDeiMatrix, dailyChargeArray, PREVENTION_DAY); // j)
+        preventionVehicle(voltDeiMatrix, dailyChargeArray, PREVENTION_DAY); // j)
 
         scanner.close();
     }
@@ -127,8 +127,7 @@ public class DB_1230350_1241456 {
         return batteryRechargeMatrix;
     }
 
-
-    //------------ EXERCISE D ------------
+    //------ EXERCISE D ------
     public static double[][] dailyCharge(double[][] voltDeiMatrix) {
         final int FORMAT = 2;
 
@@ -167,7 +166,6 @@ public class DB_1230350_1241456 {
         return dailyChargeArray;
     }
 
-
     //------ EXERCISE E ------
     public static double[][] averageDayCarsKm(double[][] voltDeiMatrix) {
         final int FORMAT = 3;
@@ -194,7 +192,6 @@ public class DB_1230350_1241456 {
 
         return averageKmMatrix;
     }
-
 
     //------ EXERCISE F ------
     public static void vehiclesWithAnHigherAverage(double[][] voltDeiMatrix, double[][] averageKmMatrix) {
@@ -275,7 +272,6 @@ public class DB_1230350_1241456 {
         }
     }
 
-
     //------ EXERCISE H ------
     public static void latestDayWithMoreCharges(double[][] dailyChargeArray) {
 
@@ -317,53 +313,8 @@ public class DB_1230350_1241456 {
         }
     }
 
-
     //------ EXERCISE J ------
-    public static void preventionVehicle(double[][] voltDeiMatrix, double[][] dailyChargeArray, int preventionDay) {
-
-        int carCharge;
-        int carKilometers;
-        int preventionVehicle = -1;
-        int lastCarCharge = Integer.MIN_VALUE;
-        int lastCarKilometers = Integer.MAX_VALUE;
-
-        int[] preventionVehicleArray = new int[voltDeiMatrix.length];
-
-//        for (int i = 0; i < preventionVehicleArray.length; i++) {
-//            preventionVehicleArray[i] = preventionVehicle;
-//        }
-
-        for (int rows = 0; rows < voltDeiMatrix.length; rows++) {
-            carKilometers = (int) voltDeiMatrix[rows][preventionDay + EXTRA_COLUMN];
-            carCharge = (int) dailyChargeArray[rows][preventionDay + EXTRA_COLUMN];
-
-
-            if (lastCarKilometers > carKilometers) {
-                lastCarKilometers = carKilometers;
-                lastCarCharge = carCharge;
-                preventionVehicle = rows;
-
-            } else if (lastCarKilometers == carKilometers) {
-                if (lastCarCharge < carCharge) {
-                    lastCarCharge = carCharge;
-                    preventionVehicle = rows;
-
-                } else if (lastCarCharge == carCharge) {
-                    boolean preventionVehicleFinder = false;
-                    for (int i = 0; i < preventionVehicleArray.length & !preventionVehicleFinder; i++) {
-                        if (preventionVehicleArray[i] != preventionVehicle) {
-                            preventionVehicle = preventionVehicleArray[i];
-                            preventionVehicleFinder = true;
-                        }
-                    }
-                }
-            }
-        }
-        System.out.printf("%n%nj) veículo de prevenção no dia <%d> : V%d", preventionDay, preventionVehicle);
-    }
-
-    //------ EXERCISE J ------ 2nd version
-    public static void preventionVehicle2(double[][] voltDeiMatrix, double[][] dailyChargeArray, int solicitedDay) {
+    public static void preventionVehicle(double[][] voltDeiMatrix, double[][] dailyChargeArray, int solicitedDay) {
 
         int preventionVehicle = -1;
         int maxChargeRegistered;
