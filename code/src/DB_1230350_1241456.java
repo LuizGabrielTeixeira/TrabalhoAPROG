@@ -43,7 +43,7 @@ public class DB_1230350_1241456 {
         double[][] averageKmMatrix = averageDayCarsKm(voltDeiMatrix); // print e) and return matrix
         vehiclesWithAnHigherAverage(voltDeiMatrix, averageKmMatrix); // f)
         vehiclesConsecutiveRecharges(batteryRechargeMatrix); // g)
-        latestDayWithMoreCharges(voltDeiMatrix, dailyChargeArray); // h)
+        latestDayWithMoreCharges(batteryRechargeMatrix); // h)
         rechargesCost(batteryRechargeMatrix); // i)
         preventionVehicle2(voltDeiMatrix, dailyChargeArray, PREVENTION_DAY); // j)
 
@@ -231,7 +231,7 @@ public class DB_1230350_1241456 {
         }
     }
 
-//------ EXERCISE G ------
+    //------ EXERCISE G ------
     public static void vehiclesConsecutiveRecharges(double[][] batteryRechargeMatrix) {
         System.out.print("\ng) veículos com mais dias consecutivas a necessitar de recarga :");
 
@@ -277,11 +277,10 @@ public class DB_1230350_1241456 {
 
 
     //------ EXERCISE H ------
-    public static void latestDayWithMoreCharges(double[][] voltDeiMatrix, double[][] dailyChargeArray) {
+    public static void latestDayWithMoreCharges(double[][] dailyChargeArray) {
 
-        int greaterColumn = 0;
-        int numberOfCharges = 0;
-        int numberOfMaxCharges = Integer.MAX_VALUE;
+        int greaterColumn = -1;
+        int numberOfCharges;
 
         for (int columns = 1; columns < dailyChargeArray[0].length; columns++) {
             numberOfCharges = 0;
@@ -291,14 +290,9 @@ public class DB_1230350_1241456 {
                     numberOfCharges++;
                 }
             }
-            if (numberOfMaxCharges > numberOfCharges) {
-                numberOfMaxCharges = numberOfCharges;
-                greaterColumn = columns + EXTRA_COLUMN;
+            if (numberOfCharges == dailyChargeArray.length) {
+                greaterColumn = columns - EXTRA_COLUMN;
             }
-        }
-
-        if (numberOfCharges == 0) {
-            greaterColumn = -1;
         }
 
         System.out.printf("\nh) dia mais tardio em que todos os veículos necessitam de recarregar <%d>\n", greaterColumn);
