@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"DB_1230350_1241456"},{"p":"<Unnamed>","l":"ExerciseJavaDoc"},{"p":"<Unnamed>","l":"ExerciseWithJavaDoc"}];updateSearchResults();
