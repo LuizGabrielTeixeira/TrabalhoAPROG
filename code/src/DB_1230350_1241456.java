@@ -144,7 +144,6 @@ public class DB_1230350_1241456 {
             remainderBattery = 0;
             for (int columns = 1; columns < voltDeiMatrix[0].length; columns++) {
 
-
                 partialBattery = (remainderBattery - (voltDeiMatrix[rows][columns]));
 
                 while (partialBattery <= 0) {
